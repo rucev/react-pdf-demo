@@ -28,6 +28,7 @@ button {
   border-radius: 5%;
   padding: 0.5rem 1rem;
   font-weight: 600;
+  max-width: 20rem;
 }
 
 button:hover {
