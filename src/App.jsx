@@ -1,52 +1,52 @@
-import React from 'react';
-import { Document, Page, Text, View, StyleSheet, pdf, Image, PDFViewer } from '@react-pdf/renderer';
-
-const MyPdfDocument = () => (
-  <Document>
-    <Page style={styles.body}>
-      <View style={styles.section}>
-        <Text style={styles.title}>Hello, Jack!</Text>
-        <Text>This is a sample PDF document created with react-pdf. You can download it!</Text>
-        <Image
-          style={styles.image}
-          src="/char.jpg"
-        />
-        <Text>A Wild Charmander Appears!</Text>
-      </View>
-    </Page>
-  </Document>
-);
-
-const styles = StyleSheet.create({
-  body: {
-    padding: 10,
-  },
-  section: {
-    margin: 10,
-    padding: 10,
-    flexGrow: 1,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: 'orangered',
-    textAlign: 'center',
-    marginBottom: 20,
-  },
-  image: {
-    marginVertical: 20,
-    marginHorizontal: 120,
-  },
-});
+import React, { useState } from 'react';
+import { PDFViewer, pdf } from '@react-pdf/renderer';
+import MyPdfDocument from './components/MyPdfDocument';
+import MyHtmlDocument from './components/MyHtmlDocument';
 
 const App = () => {
+  const [view, setView] = useState('main');
+
+  const handleDownloadPdf = async () => {
+    const doc = pdf(<MyPdfDocument />);
+    const blob = await doc.toBlob();
+
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'my-char-pdf.pdf';
+    link.click();
+
+    URL.revokeObjectURL(url);
+  };
 
   return (
     <main>
       <h1>REACT PDF</h1>
-      <PDFViewer width="100%" height="600">
-        <MyPdfDocument />
-      </PDFViewer>
+      {
+        view !== 'main' &&
+        <button onClick={() => setView('main')}>{'< Go Back'}</button>
+      }
+      {
+        view === 'main' &&
+        <section>
+          <button onClick={() => setView('simple')}>Simple Way</button>
+          <button onClick={() => setView('complicated')}>Overcomplicated Way</button>
+        </section>
+      }
+      {
+        view === 'simple' &&
+        <PDFViewer width="100%" height="550">
+          <MyPdfDocument />
+        </PDFViewer>
+      }
+      {
+        view === 'complicated' &&
+        <section>
+          <MyHtmlDocument />
+          <button onClick={handleDownloadPdf}>Download as PDF</button>
+        </section>
+      }
+
     </main>
   );
 };

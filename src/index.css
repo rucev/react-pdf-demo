@@ -3,10 +3,38 @@ main {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 1rem
 }
 
 h1 {
   color: orangered;
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   font-weight: 600;
+}
+
+section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  gap: 2rem;
+}
+
+button {
+  background-color: white;
+  cursor: pointer;
+  border: solid 1px;
+  border-color: orangered;
+  border-radius: 5%;
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+}
+
+button:hover {
+  color: orangered;
+}
+
+.pdf-html {
+  width: 80vw !important;
+  overflow: hidden;
 }
