@@ -16,8 +16,7 @@ jobs:
       - run: npm install -g surge
       - name: Install dependencies and build code
         run: |
-          cd app  # Change directory to the app directory
-          npm install  # Install dependencies
+          npm install
           npm run build
       - name: Deploy
         if: success()
